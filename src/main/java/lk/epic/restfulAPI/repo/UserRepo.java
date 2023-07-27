@@ -1,5 +1,8 @@
 package lk.epic.restfulAPI.repo;
 
-public interface UserRepo {
+import lk.epic.restfulAPI.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepo extends JpaRepository<User, String> {
 
 }

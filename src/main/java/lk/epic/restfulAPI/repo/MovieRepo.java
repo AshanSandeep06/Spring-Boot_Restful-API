@@ -1,5 +1,8 @@
 package lk.epic.restfulAPI.repo;
 
-public interface MovieRepo {
+import lk.epic.restfulAPI.entity.Movie;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MovieRepo extends JpaRepository<Movie, String> {
 
 }
