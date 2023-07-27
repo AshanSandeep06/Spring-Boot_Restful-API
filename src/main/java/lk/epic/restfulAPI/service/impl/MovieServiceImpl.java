@@ -42,7 +42,6 @@ public class MovieServiceImpl implements MovieService {
         // First we should check JWT token can Authorized or not
         // return new ResponseUtil("03", "Not Authorized", null);
 
-        // We should write getMovieByIMDB method in MovieRepo class
         if (movieRepo.existsById(imdb)) {
             return new ResponseUtil("00", "Success", movieRepo.findById(imdb));
         } else {

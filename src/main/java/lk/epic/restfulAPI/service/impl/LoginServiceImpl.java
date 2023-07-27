@@ -21,15 +21,12 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseUtil login(LoginDTO loginDTO) {
         if (userRepo.existsById(loginDTO.getEmail())) {
-            // Should implement this method in UserRepo class
-            // userRepo.ensureUserCredentials();
-            // Then we should check the email and password are both correct for
-            // relevant user
-            // And then if that success we send this
-            return new ResponseUtil("00", "Success", "JWT Token");
-
-            // Otherwise,
-            // return new ResponseUtil("03", "Invalid Credentials", null);
+            User login = userRepo.findUserByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
+            if (login != null) {
+                return new ResponseUtil("00", "Success", "JWT Token");
+            } else {
+                return new ResponseUtil("03", "Invalid Credentials", null);
+            }
         } else {
             return new ResponseUtil("02", "No such user exists!", null);
         }
