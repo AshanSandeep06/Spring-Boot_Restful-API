@@ -30,7 +30,7 @@ public class MovieServiceImpl implements MovieService {
 
         List<Movie> allMovies = movieRepo.findAll();
         if (allMovies.size() != 0) {
-            return new ResponseUtil("00", "Success", mapper.map(allMovies, new TypeToken<MovieDTO>() {
+            return new ResponseUtil("00", "Success", mapper.map(allMovies, new TypeToken<List<MovieDTO>>() {
             }.getType()));
         } else {
             return new ResponseUtil("02", "No Movies Found", null);
