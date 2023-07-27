@@ -3,3 +3,5 @@
 
 # Ignore IDE-specific files
 .idea/
+
+/src/main/resources/application.properties
