@@ -1,7 +1,4 @@
-# Ignore target directory (where compiled classes and build artifacts are stored)
 /target/
-
-# Ignore IDE-specific files
 .idea/
-
 /src/main/resources/application.properties
+/pom.xml
