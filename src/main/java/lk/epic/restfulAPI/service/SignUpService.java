@@ -1,5 +1,7 @@
 package lk.epic.restfulAPI.service;
 
-public interface SignUpService {
+import lk.epic.restfulAPI.dto.SignUpDTO;
 
+public interface SignUpService {
+    void signUp(SignUpDTO signUpDTO);
 }
