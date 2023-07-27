@@ -22,6 +22,9 @@ public class SignUpServiceImpl implements SignUpService {
     public ResponseUtil signUp(SignUpDTO signUpDTO) {
         if (!userRepo.existsById(signUpDTO.getEmail())) {
             User userIsSaved = userRepo.save(mapper.map(signUpDTO, User.class));
+
+            System.out.println("Saved User : " + userIsSaved);
+
             if (userIsSaved != null) {
                 return new ResponseUtil("00", "Success", null);
             } else {
