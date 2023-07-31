@@ -1,12 +1,16 @@
 package lk.epic.restfulAPI.service.impl;
 
+import lk.epic.restfulAPI.config.service.JwtService;
 import lk.epic.restfulAPI.dto.SignUpDTO;
 import lk.epic.restfulAPI.entity.User;
 import lk.epic.restfulAPI.repo.UserRepo;
+import lk.epic.restfulAPI.roles.Role;
 import lk.epic.restfulAPI.service.SignUpService;
+import lk.epic.restfulAPI.util.AuthenticationResponse;
 import lk.epic.restfulAPI.util.ResponseUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +21,31 @@ public class SignUpServiceImpl implements SignUpService {
     private UserRepo userRepo;
     @Autowired
     private ModelMapper mapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtService jwtService;
 
     @Override
     public ResponseUtil signUp(SignUpDTO signUpDTO) {
-        if (!userRepo.existsById(signUpDTO.getEmail())) {
-            User userIsSaved = userRepo.save(mapper.map(signUpDTO, User.class));
+        var user = User.builder()
+                .firstName(signUpDTO.getFirstName())
+                .lastName(signUpDTO.getLastName())
+                .email(signUpDTO.getEmail())
+                .password(passwordEncoder.encode(signUpDTO.getPassword()))
+                .role(Role.USER)
+                .build();
 
+        if (!userRepo.existsById(signUpDTO.getEmail())) {
+            User userIsSaved = userRepo.save(user);
             System.out.println("Saved User : " + userIsSaved);
 
+            var jwtToken = jwtService.generateJwtToken(user);
+
             if (userIsSaved != null) {
-                return new ResponseUtil("00", "Success", null);
+                return new ResponseUtil("00", "Success",
+                        AuthenticationResponse.builder().token(jwtToken).build()
+                );
             } else {
                 return new ResponseUtil("06", "Bad Request", null);
             }

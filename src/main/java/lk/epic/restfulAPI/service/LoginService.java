@@ -4,5 +4,5 @@ import lk.epic.restfulAPI.dto.LoginDTO;
 import lk.epic.restfulAPI.util.ResponseUtil;
 
 public interface LoginService {
-    ResponseUtil login(LoginDTO loginDTO);
+    ResponseUtil authenticate(LoginDTO loginDTO);
 }

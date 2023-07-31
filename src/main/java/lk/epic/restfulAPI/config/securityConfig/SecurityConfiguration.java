@@ -34,7 +34,11 @@ public class SecurityConfiguration {
         // This will disable the csrf verification
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(new AntPathRequestMatcher("/api/v1/movie/**"))
+                .requestMatchers(
+                        new AntPathRequestMatcher("/api/v1/login/**"),
+                        new AntPathRequestMatcher("/api/v1/signup/**"),
+                        new AntPathRequestMatcher("/api/v1/movie/**")
+                )
                 .permitAll()
                 .anyRequest()
                 .authenticated()
