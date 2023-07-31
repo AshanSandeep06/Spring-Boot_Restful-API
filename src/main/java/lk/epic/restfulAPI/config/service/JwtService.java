@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -52,7 +53,7 @@ public class JwtService {
     }
 
     // To Extract a single Claim
-    public <T> T extractClaim(String jwtToken, Function<Claims, T> claimsResolver) {
+    public <T> T  extractClaim(String jwtToken, Function<Claims, T> claimsResolver) {
         // Extracting all the Claims of Jwt token
         final Claims claims = extractAllClaims(jwtToken);
         return claimsResolver.apply(claims);
@@ -68,6 +69,10 @@ public class JwtService {
     // Generate a jwt token,
     // Check the jwt token is expired or not
 
+    public String generateJwtToken(UserDetails userDetails) {
+        return generateJwtToken(new HashMap<>(), userDetails);
+    }
+
     // Generate a JWT Token(type --> String)
     // This map contains the Claims or Extra Claims that we want to add
     // setExpiration() this method represents, how long this jwt token should be valid
@@ -81,5 +86,20 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    // This is used for, Validate a Jwt token
+    // We also need to validate this jwt token belongs to this Relevant User
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String email = extractEmail(token);
+        return (email.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
     }
 }
