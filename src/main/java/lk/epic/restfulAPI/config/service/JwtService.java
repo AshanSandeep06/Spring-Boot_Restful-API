@@ -2,13 +2,17 @@ package lk.epic.restfulAPI.config.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service // To tell Spring, create a bean from this class
@@ -64,5 +68,18 @@ public class JwtService {
     // Generate a jwt token,
     // Check the jwt token is expired or not
 
-
+    // Generate a JWT Token(type --> String)
+    // This map contains the Claims or Extra Claims that we want to add
+    // setExpiration() this method represents, how long this jwt token should be valid
+    // System.currentTimeMillis() + 1000 * 60 * 24 ====> 24 hours + 1000 milliseconds
+    // Compact() method will generate and return the jwt token
+    public String generateJwtToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return Jwts.builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 }
