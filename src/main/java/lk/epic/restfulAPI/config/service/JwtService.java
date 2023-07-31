@@ -5,5 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service // To tell Spring, create a bean from this class
 public class JwtService {
-
+    public String extractEmail(String jwtToken) {
+        return null;
+    }
 }
