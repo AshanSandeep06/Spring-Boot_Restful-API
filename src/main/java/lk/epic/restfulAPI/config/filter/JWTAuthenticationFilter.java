@@ -4,6 +4,11 @@ import lk.epic.restfulAPI.config.service.JwtService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,6 +23,9 @@ import java.io.IOException;
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private final JwtService jwtService;
+
+    @Autowired
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -41,6 +49,26 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             // And we need to pass JWT Token as a parameter
             // To JWTService
             email = jwtService.extractEmail(jwt_token);
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+
+                // The next step is to validate and check if the jwt token is still valid or not.
+                if (jwtService.isTokenValid(jwt_token, userDetails)) {
+                    // If the jwt token is valid, then we need to update the security context holder and send the request to our dispatcher servlet
+                    // We need this UsernamePasswordAuthenticationToken Object to update the security context holder
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                    // Build the details out of our Requests out of our HTTP Request
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    // Final step is to, update the Security Context holder
+                    // Set Authentication with our authentication token
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
+
+            } else {
+                filterChain.doFilter(request, response);
+            }
         }
     }
 }
