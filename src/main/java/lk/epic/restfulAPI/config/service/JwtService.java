@@ -6,6 +6,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import java.util.function.Function;
 @Service // To tell Spring, create a bean from this class
 public class JwtService {
     @Value("${secret_key}")
-    private static String SECRET_KEY;
+    private String SECRET_KEY;
 
     // A Sign-in key is a Secret key, that is used to
     // To digitally sign the jwt token
@@ -53,7 +55,7 @@ public class JwtService {
     }
 
     // To Extract a single Claim
-    public <T> T  extractClaim(String jwtToken, Function<Claims, T> claimsResolver) {
+    public <T> T extractClaim(String jwtToken, Function<Claims, T> claimsResolver) {
         // Extracting all the Claims of Jwt token
         final Claims claims = extractAllClaims(jwtToken);
         return claimsResolver.apply(claims);

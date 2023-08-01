@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @CrossOrigin
 public class AppWideExceptionHandler {
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
     public ResponseUtil handleRuntimeExceptions(Exception e) {
         return new ResponseUtil("06", "Bad Request", null);

@@ -36,39 +36,40 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-        } else {
-            // Extract the JWT Token from Authentication Header
-            jwt_token = authenticationHeader.substring(7);
-            System.out.println(jwt_token);
+            return;
+        }
 
-            // After Extracting the JWT Token, Then I want to extract
-            // also this User Email
+        // Extract the JWT Token from Authentication Header
+        jwt_token = authenticationHeader.substring(7);
+        System.out.println(jwt_token);
 
-            // We need to extract User Email from the JWT Token,
-            // We need a class that can manipulate this JWT Token
-            // And we need to pass JWT Token as a parameter
-            // To JWTService
-            email = jwtService.extractEmail(jwt_token);
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+        // After Extracting the JWT Token, Then I want to extract
+        // also this User Email
 
-                // The next step is to validate and check if the jwt token is still valid or not.
-                if (jwtService.isTokenValid(jwt_token, userDetails)) {
-                    // If the jwt token is valid, then we need to update the security context holder and send the request to our dispatcher servlet
-                    // We need this UsernamePasswordAuthenticationToken Object to update the security context holder
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        // We need to extract User Email from the JWT Token,
+        // We need a class that can manipulate this JWT Token
+        // And we need to pass JWT Token as a parameter
+        // To JWTService
+        email = jwtService.extractEmail(jwt_token);
 
-                    // Build the details out of our Requests out of our HTTP Request
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
 
-                    // Final step is to, update the Security Context holder
-                    // Set Authentication with our authentication token
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                }
+            // The next step is to validate and check if the jwt token is still valid or not.
+            if (jwtService.isTokenValid(jwt_token, userDetails)) {
+                System.out.println("Token is valid");
+                // If the jwt token is valid, then we need to update the security context holder and send the request to our dispatcher servlet
+                // We need this UsernamePasswordAuthenticationToken Object to update the security context holder
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-            } else {
-                filterChain.doFilter(request, response);
+                // Build the details out of our Requests out of our HTTP Request
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                // Final step is to, update the Security Context holder
+                // Set Authentication with our authentication token
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
+        filterChain.doFilter(request, response);
     }
 }
