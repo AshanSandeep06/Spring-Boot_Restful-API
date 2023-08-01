@@ -39,11 +39,14 @@
 		{
 			"name": "Login Request",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"email\": \"helloworld@email.com\",\r\n\"password\": \"ABCD12345\"\r\n}",
+					"raw": "{\r\n\"email\": \"kasun123@email.com\",\r\n\"password\": \"BNM345\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,6 +72,16 @@
 		{
 			"name": "Get All Request",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA4NzY2NjcsImV4cCI6MTY5MDg3ODEwN30.oMtQ9vN_48I3gqoUJGrX5GCqgtQqJTU_Pscw9UVuIdg",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -190,6 +203,37 @@
 						"movie",
 						"delete",
 						"tt0371749"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA4NzY2NjcsImV4cCI6MTY5MDg3ODEwN30.oMtQ9vN_48I3gqoUJGrX5GCqgtQqJTU_Pscw9UVuIdg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/v1/demo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"v1",
+						"demo"
 					]
 				}
 			},

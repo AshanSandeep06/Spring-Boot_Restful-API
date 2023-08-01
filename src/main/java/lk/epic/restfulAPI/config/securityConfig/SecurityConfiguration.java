@@ -35,9 +35,8 @@ public class SecurityConfiguration {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        new AntPathRequestMatcher("/api/v1/login/**"),
                         new AntPathRequestMatcher("/api/v1/signup/**"),
-                        new AntPathRequestMatcher("/api/v1/movie/**")
+                        new AntPathRequestMatcher("/api/v1/login/**")
                 )
                 .permitAll()
                 .anyRequest()
