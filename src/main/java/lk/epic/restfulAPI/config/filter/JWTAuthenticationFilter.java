@@ -1,9 +1,13 @@
 package lk.epic.restfulAPI.config.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lk.epic.restfulAPI.config.service.JwtService;
+import lk.epic.restfulAPI.util.ResponseUtil;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +38,33 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String email;
 
         if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer ")) {
+            /*response.getWriter().println(new ResponseUtil("03", "Not Authorized", null));
             filterChain.doFilter(request, response);
+            return;*/
+
+            // ---------------------------------------------------
+
+            String requestURI = request.getRequestURI();
+            System.out.println(requestURI);
+
+            String urlPrefix = "/api/v1";
+            if (requestURI.equals(urlPrefix + "/signup") || requestURI.equals(urlPrefix + "/login")) {
+                filterChain.doFilter(request, response);
+            } else {
+                // Create a custom response
+                ResponseUtil customResponse = new ResponseUtil("03", "Not Authorized", null);
+
+                // Set the response status and content type
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+                // Serialize the custom response to JSON
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonResponse = objectMapper.writeValueAsString(customResponse);
+
+                // Write the JSON response to the response body
+                response.getWriter().write(jsonResponse);
+            }
             return;
         }
 

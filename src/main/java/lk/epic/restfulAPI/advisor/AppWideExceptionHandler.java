@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.nio.file.AccessDeniedException;
+import java.security.SignatureException;
 
 @RestControllerAdvice
 @CrossOrigin
 public class AppWideExceptionHandler {
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<ResponseUtil> handleRuntimeExceptions(Exception e) {
+    public ResponseEntity<ResponseUtil> handleExceptions(Exception e) {
         System.out.println(e.getMessage());
         System.out.println(e.getLocalizedMessage());
         System.out.println(e.getClass().getName());
