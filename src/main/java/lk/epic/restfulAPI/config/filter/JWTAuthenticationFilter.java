@@ -51,16 +51,13 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             if (requestURI.equals(urlPrefix + "/signup") || requestURI.equals(urlPrefix + "/login")) {
                 filterChain.doFilter(request, response);
             } else {
-                // Create a custom response
-                ResponseUtil customResponse = new ResponseUtil("03", "Not Authorized", null);
-
                 // Set the response status and content type
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
                 // Serialize the custom response to JSON
                 ObjectMapper objectMapper = new ObjectMapper();
-                String jsonResponse = objectMapper.writeValueAsString(customResponse);
+                String jsonResponse = objectMapper.writeValueAsString(new ResponseUtil("03", "Not Authorized", null));
 
                 // Write the JSON response to the response body
                 response.getWriter().write(jsonResponse);
