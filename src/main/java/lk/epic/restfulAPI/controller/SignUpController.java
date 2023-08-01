@@ -20,7 +20,7 @@ public class SignUpController {
         ResponseUtil signUp = signUpService.signUp(signUpDTO);
 
         if (signUp.getResponseCode().equals("00")) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(signUp);
+            return ResponseEntity.status(HttpStatus.OK).body(signUp);
         } else if (signUp.getResponseCode().equals("04")) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(signUp);
         } else {

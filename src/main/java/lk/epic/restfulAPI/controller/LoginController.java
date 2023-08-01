@@ -17,14 +17,14 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<ResponseUtil> authenticate(@RequestBody LoginDTO loginDTO) {
-//        return loginService.authenticate(loginDTO);
         ResponseUtil authenticate = loginService.authenticate(loginDTO);
+
         if (authenticate.getResponseCode().equals("00")) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(authenticate);
+            return ResponseEntity.status(HttpStatus.OK).body(authenticate);
         } else if (authenticate.getResponseCode().equals("02")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(authenticate);
         } else if (authenticate.getResponseCode().equals("03")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticate);
+            return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body(authenticate);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(authenticate);
         }

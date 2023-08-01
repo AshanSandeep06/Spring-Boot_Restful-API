@@ -71,9 +71,11 @@ public class MovieServiceImpl implements MovieService {
             if (movie != null) {
                 movie.setCategory(movieDTO.getCategory());
                 movie.setTitle(movieDTO.getTitle());
+                movie.setDescription(movieDTO.getDescription());
                 movie.setRating(movieDTO.getRating());
                 movie.setYear(movieDTO.getYear());
                 movie.setImageUrl(movieDTO.getImageUrl());
+
                 movieRepo.save(movie);
             }
             return new ResponseUtil("00", "Success", null);

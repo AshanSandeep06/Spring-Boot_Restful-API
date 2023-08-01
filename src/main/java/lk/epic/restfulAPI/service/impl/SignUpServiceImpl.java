@@ -45,13 +45,10 @@ public class SignUpServiceImpl implements SignUpService {
 
         if (!userRepo.existsById(signUpDTO.getEmail())) {
             User userIsSaved = userRepo.save(user);
-            System.out.println("Saved User : " + userIsSaved);
 
             if (userIsSaved != null) {
                 var jwtToken = jwtService.generateJwtToken(user);
-                return new ResponseUtil("00", "Success",
-                        AuthenticationResponse.builder().token(jwtToken).build()
-                );
+                return new ResponseUtil("00", "Success", null);
             } else {
                 return new ResponseUtil("06", "Bad Request", null);
             }
