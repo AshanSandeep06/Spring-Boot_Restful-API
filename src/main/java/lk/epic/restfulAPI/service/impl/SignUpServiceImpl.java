@@ -6,7 +6,6 @@ import lk.epic.restfulAPI.entity.User;
 import lk.epic.restfulAPI.repo.UserRepo;
 import lk.epic.restfulAPI.roles.Role;
 import lk.epic.restfulAPI.service.SignUpService;
-import lk.epic.restfulAPI.util.AuthenticationResponse;
 import lk.epic.restfulAPI.util.PasswordHashing;
 import lk.epic.restfulAPI.util.ResponseUtil;
 import org.modelmapper.ModelMapper;
@@ -14,10 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 @Service
 @Transactional
@@ -50,6 +45,7 @@ public class SignUpServiceImpl implements SignUpService {
                 var jwtToken = jwtService.generateJwtToken(user);
                 return new ResponseUtil("00", "Success", null);
             } else {
+                System.out.println("sdsdsdsdsdsd");
                 return new ResponseUtil("06", "Bad Request", null);
             }
         } else {

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/signup")
 @CrossOrigin
@@ -21,7 +23,7 @@ public class SignUpController {
 
     @PostMapping
     @ApiOperation(value = "To SignUp a User", response = ResponseEntity.class, code = 200)
-    public ResponseEntity<ResponseUtil> signUp(@RequestBody SignUpDTO signUpDTO) {
+    public ResponseEntity<ResponseUtil> signUp(@Valid @RequestBody SignUpDTO signUpDTO) {
         ResponseUtil signUp = signUpService.signUp(signUpDTO);
 
         switch (signUp.getResponseCode()) {

@@ -17,6 +17,8 @@ import java.util.List;
 @ToString
 @Entity
 @Builder
+//@NotBlank() -----> A Bean Validation's Constraint(To constraint the all fields)
+// Can be sent an error message if it not fits with validation
 public class User implements UserDetails {
     @Id
     private String email;

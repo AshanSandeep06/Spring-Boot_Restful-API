@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/login")
 @CrossOrigin
@@ -20,7 +22,7 @@ public class LoginController {
 
     @PostMapping
     @ApiOperation(value = "Authenticate Or Login a User", response = ResponseEntity.class, code = 200)
-    public ResponseEntity<ResponseUtil> authenticate(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<ResponseUtil> authenticate(@Valid @RequestBody LoginDTO loginDTO) {
         ResponseUtil authenticate = loginService.authenticate(loginDTO);
 
         switch (authenticate.getResponseCode()) {

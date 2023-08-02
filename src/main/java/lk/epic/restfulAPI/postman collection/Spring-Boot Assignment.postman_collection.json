@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"email\": \"kasun123@email.com\",\r\n\"firstName\": \"kasun\",\r\n\"lastName\": \"milshan\",\r\n\"password\": \"BNM345\"\r\n}",
+					"raw": "{\r\n\"email\": \"kasun456@email.com\",\r\n\"firstName\": \"kasun\",\r\n\"lastName\": \"rajitha\",\r\n\"password\": \"123rty\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -46,7 +46,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"email\": \"kasun123@email.com\",\r\n\"password\": \"BNM345\"\r\n}",
+					"raw": "{\r\n\"email\": \"kasun456@email.com\",\r\n\"password\": \"123rty\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -77,7 +77,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA4NzY2NjcsImV4cCI6MTY5MDg3ODEwN30.oMtQ9vN_48I3gqoUJGrX5GCqgtQqJTU_Pscw9UVuIdg",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA5NTk5OTgsImV4cCI6MTY5MDk2MTQzOH0.6Ozkn2x7BgWvAtXnAouUY923M0edYU_jUYGbiwKVVK4",
 							"type": "string"
 						}
 					]
@@ -85,7 +85,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9000/api/v1/movie/",
+					"raw": "http://localhost:9000/api/v1/movie",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -94,8 +94,7 @@
 					"path": [
 						"api",
 						"v1",
-						"movie",
-						""
+						"movie"
 					]
 				}
 			},
@@ -104,6 +103,16 @@
 		{
 			"name": "Get Movie By imdb",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjQ1NkBlbWFpbC5jb20iLCJpYXQiOjE2OTA5Nzg3MjYsImV4cCI6MTY5MDk4MDE2Nn0.fzbmK5nalNNiYENbGpsw51jJE0d-yJnuqGW1JL5BBqM",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -126,11 +135,21 @@
 		{
 			"name": "Add Movie Request",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA5NTk5OTgsImV4cCI6MTY5MDk2MTQzOH0.6Ozkn2x7BgWvAtXnAouUY923M0edYU_jUYGbiwKVVK4",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"imdb\": \"tt0371743\",\r\n\"title\": \"Iron Man\",\r\n\"description\": \"After being held captive in an Afghan cave, billionaire engineer Tony Stark creates unique weaponized suit of armor to fight evil.\",\r\n\"rating\": 7.9,\r\n\"category\": \"Action | Adventure | Fantasy\",\r\n\"year\": 2008,\r\n\"imageUrl\":\r\n\"https://image.tmdb.org/t/p/original/78lPtwv72eTNqFW9COBYI0dWDJa.jpg\"\r\n}",
+					"raw": "{\r\n\"imdb\": \"tt0371749\",\r\n\"title\": \"Iron Man\",\r\n\"description\": \"After being held captive in an Afghan cave, billionaire engineer Tony Stark creates unique weaponized suit of armor to fight evil.\",\r\n\"rating\": 7.9,\r\n\"category\": \"Action | Adventure | Fantasy\",\r\n\"year\": 2008,\r\n\"imageUrl\":\r\n\"https://image.tmdb.org/t/p/original/78lPtwv72eTNqFW9COBYI0dWDJa.jpg\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,11 +176,21 @@
 		{
 			"name": "Update Movie Request",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA5NTk5OTgsImV4cCI6MTY5MDk2MTQzOH0.6Ozkn2x7BgWvAtXnAouUY923M0edYU_jUYGbiwKVVK4",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"imdb\": \"tt0371746\",\r\n\"title\": \"Iron Man\",\r\n\"description\": \"After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.\",\r\n\"rating\": 7.9,\r\n\"category\": \"Action | Adventure | Horror\",\r\n\"year\": 2013,\r\n\"imageUrl\":\r\n\"https://image.tmdb.org/t/p/original/78lPtwv72eTNqFW9COBYI0dWDJa.jpg\"\r\n}",
+					"raw": "{\r\n\"imdb\": \"tt0371746\",\r\n\"title\": \"Bat Man\",\r\n\"description\": \"Marvel\",\r\n\"rating\": 7.9,\r\n\"category\": \"Action | Adventure | Horror\",\r\n\"year\": 2013,\r\n\"imageUrl\":\r\n\"https://image.tmdb.org/t/p/original/78lPtwv72eTNqFW9COBYI0dWDJa.jpg\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -188,6 +217,16 @@
 		{
 			"name": "Delete Movie Request",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXN1bjEyM0BlbWFpbC5jb20iLCJpYXQiOjE2OTA5NTk5OTgsImV4cCI6MTY5MDk2MTQzOH0.6Ozkn2x7BgWvAtXnAouUY923M0edYU_jUYGbiwKVVK4",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
@@ -234,6 +273,48 @@
 						"api",
 						"v1",
 						"demo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/v1/login/kasun123@email.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"v1",
+						"login",
+						"kasun123@email.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/swagger-ui/index.html",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"swagger-ui",
+						"index.html"
 					]
 				}
 			},
