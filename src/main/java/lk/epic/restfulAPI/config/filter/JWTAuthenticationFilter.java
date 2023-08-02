@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lk.epic.restfulAPI.config.service.JwtService;
 import lk.epic.restfulAPI.util.ResponseUtil;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,13 +21,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
-@RequiredArgsConstructor // Give this Constructor for, final fields (eg:- private final String myName)
+@Component// Give this Constructor for, final fields (eg:- private final String myName)
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
-    @Autowired
     private final JwtService jwtService;
-    @Autowired
     private final UserDetailsService userDetailsService;
+
+    @Autowired
+    public JWTAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+        this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {

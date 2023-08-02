@@ -2,18 +2,13 @@ package lk.epic.restfulAPI.advisor;
 
 import io.jsonwebtoken.MalformedJwtException;
 import lk.epic.restfulAPI.util.ResponseUtil;
-import lk.epic.restfulAPI.util.UnauthorizedAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
-
-import java.nio.file.AccessDeniedException;
-import java.security.SignatureException;
 
 @RestControllerAdvice
 @CrossOrigin
