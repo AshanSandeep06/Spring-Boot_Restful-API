@@ -2,9 +2,7 @@ package lk.epic.restfulAPI.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lk.epic.restfulAPI.dto.LoginDTO;
 import lk.epic.restfulAPI.dto.MovieDTO;
-import lk.epic.restfulAPI.service.LoginService;
 import lk.epic.restfulAPI.service.MovieService;
 import lk.epic.restfulAPI.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
