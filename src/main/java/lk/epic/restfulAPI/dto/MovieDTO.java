@@ -31,8 +31,8 @@ public class MovieDTO {
     @NotBlank(message = "Category Shouldn't be Blank")
     private String category;
     // @Digits(integer = 4, fraction = 0, message = "Year should be in this pattern eg:-1998, 2009")
-     @Min(value = 1900, message = "Year should be in this pattern eg:-1998, 2009")
-     @Max(value = 2023, message = "Year should be in this pattern eg:-1998, 2009")
+    @Min(value = 1900, message = "Year should be in this pattern eg:-1998, 2009")
+    @Max(value = 2023, message = "Year should be in this pattern eg:-1998, 2009")
     private int year;
     @NotEmpty(message = "ImageUrl Shouldn't be Empty")
     @NotBlank(message = "ImageUrl Shouldn't be Blank")
