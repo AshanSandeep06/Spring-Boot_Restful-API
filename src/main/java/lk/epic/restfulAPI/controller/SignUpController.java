@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/signup")
 @CrossOrigin
-@Api(tags = "SignUp Controller", description = "SignUp API Endpoint")
+@Api(value = "SignUp Controller", protocols = "http")
 // REST API Endpoints
 public class SignUpController {
     @Autowired
     private SignUpService signUpService;
 
     @PostMapping
-    @ApiOperation("To SignUp a User")
+    @ApiOperation(value = "To SignUp a User", response = ResponseEntity.class, code = 200)
     public ResponseEntity<ResponseUtil> signUp(@RequestBody SignUpDTO signUpDTO) {
         ResponseUtil signUp = signUpService.signUp(signUpDTO);
 

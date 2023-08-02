@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/login")
 @CrossOrigin
-@Api(tags = "Login Controller", description = "Login API Endpoint")
+@Api(value = "Login Controller", protocols = "http")
 public class LoginController {
     @Autowired
     private LoginService loginService;
 
     @PostMapping
-    @ApiOperation("Authenticate Or Login a User")
+    @ApiOperation(value = "Authenticate Or Login a User", response = ResponseEntity.class, code = 200)
     public ResponseEntity<ResponseUtil> authenticate(@RequestBody LoginDTO loginDTO) {
         ResponseUtil authenticate = loginService.authenticate(loginDTO);
 
