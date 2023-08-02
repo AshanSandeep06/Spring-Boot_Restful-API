@@ -24,12 +24,21 @@ public class SignUpController {
     public ResponseEntity<ResponseUtil> signUp(@RequestBody SignUpDTO signUpDTO) {
         ResponseUtil signUp = signUpService.signUp(signUpDTO);
 
-        if (signUp.getResponseCode().equals("00")) {
+        switch (signUp.getResponseCode()) {
+            case "00":
+                return ResponseEntity.status(HttpStatus.OK).body(signUp);
+            case "04":
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(signUp);
+            default:
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(signUp);
+        }
+
+        /*if (signUp.getResponseCode().equals("00")) {
             return ResponseEntity.status(HttpStatus.OK).body(signUp);
         } else if (signUp.getResponseCode().equals("04")) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(signUp);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(signUp);
-        }
+        }*/
     }
 }

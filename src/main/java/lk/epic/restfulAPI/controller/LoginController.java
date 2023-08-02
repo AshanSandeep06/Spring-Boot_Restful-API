@@ -23,7 +23,18 @@ public class LoginController {
     public ResponseEntity<ResponseUtil> authenticate(@RequestBody LoginDTO loginDTO) {
         ResponseUtil authenticate = loginService.authenticate(loginDTO);
 
-        if (authenticate.getResponseCode().equals("00")) {
+        switch (authenticate.getResponseCode()) {
+            case "00":
+                return ResponseEntity.status(HttpStatus.OK).body(authenticate);
+            case "02":
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(authenticate);
+            case "03":
+                return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body(authenticate);
+            default:
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(authenticate);
+        }
+
+        /*if (authenticate.getResponseCode().equals("00")) {
             return ResponseEntity.status(HttpStatus.OK).body(authenticate);
         } else if (authenticate.getResponseCode().equals("02")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(authenticate);
@@ -31,6 +42,6 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body(authenticate);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(authenticate);
-        }
+        }*/
     }
 }

@@ -3,6 +3,8 @@ package lk.epic.restfulAPI;
 import lk.epic.restfulAPI.repo.UserRepo;
 import lk.epic.restfulAPI.util.UnauthorizedAccessException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,8 +28,10 @@ import java.util.Map;
 public class WebAppInitializer {
     @Autowired
     private UserRepo userRepo;
+    private static final Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
 
     public static void main(String[] args) {
+        logger.debug("Starting application...");
         SpringApplication.run(WebAppInitializer.class);
     }
 
