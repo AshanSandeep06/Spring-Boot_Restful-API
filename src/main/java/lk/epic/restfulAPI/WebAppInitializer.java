@@ -19,12 +19,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
+@EnableSwagger2
+@EnableSwagger2WebMvc
 public class WebAppInitializer {
     @Autowired
     private UserRepo userRepo;
@@ -69,5 +80,25 @@ public class WebAppInitializer {
         return (request, response, accessDeniedException) -> {
             throw new AccessDeniedException("You are not authorized to access this resource.");
         };
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("movie-api")
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Your API Documentation")
+                .description("Description of your API")
+                .licenseUrl("user123@gmail.com")
+                .version("1.0")
+                .build();
     }
 }
