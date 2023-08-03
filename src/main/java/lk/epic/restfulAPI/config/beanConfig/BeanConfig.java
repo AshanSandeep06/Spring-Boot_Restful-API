@@ -11,7 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -49,7 +49,14 @@ public class BeanConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        /*---- BCrypt Hashing algo ----*/
+        // return new BCryptPasswordEncoder();
+
+        /*---- SHA256 Hashing algo ----*/
+        // return new StandardPasswordEncoder();
+
+        /*---- SHA256 Hashing algo ----*/
+        return new MessageDigestPasswordEncoder("SHA-256");
     }
 
     @Bean
