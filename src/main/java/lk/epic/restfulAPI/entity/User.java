@@ -27,10 +27,12 @@ public class User implements UserDetails {
     private String password;
 
     // TO create a new a Role
+//    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("Want : "+role.name());
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 

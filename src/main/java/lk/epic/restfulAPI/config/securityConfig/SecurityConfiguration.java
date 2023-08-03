@@ -1,7 +1,6 @@
 package lk.epic.restfulAPI.config.securityConfig;
 
 import lk.epic.restfulAPI.config.filter.JWTAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,24 +13,33 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.servlet.Filter;
-
 @Configuration
 @EnableWebSecurity // Enables Web Spring security
-@RequiredArgsConstructor
 public class SecurityConfiguration {
-    @Autowired
-    private AuthenticationProvider authenticationProvider;
-    @Autowired
-    private JWTAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    private final JWTAuthenticationFilter jwtAuthFilter;
+    private final AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-
+    public SecurityConfiguration(AuthenticationProvider authenticationProvider, JWTAuthenticationFilter jwtAuthFilter, AccessDeniedHandler accessDeniedHandler) {
+        this.authenticationProvider = authenticationProvider;
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
     // At the application startup, Spring Security will try to look for
     // Bean type SecurityFilterChain
     // This SecurityFilterChain is the been responsible for Configuring all the HTTP Security of our application
     // Let's start to configure our HTTP Security
+
+    /*
+    *  Here's a quick recap of your configuration:
+
+                    Endpoints /api/v1/signup/** and /api/v1/login/** are permitted without authentication.
+                    Endpoint /api/v1/movie/update requires users to have the "ADMIN" role.
+                    Endpoint /api/v1/movie/delete/{imdb} also requires users to have the "ADMIN" role.
+                    All other requests require authentication.
+    * */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // Configurations
@@ -39,9 +47,13 @@ public class SecurityConfiguration {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
+                        new AntPathRequestMatcher("/api/v1/movie/update"),
+                        new AntPathRequestMatcher("/api/v1/movie/delete/{imdb}")
+                )
+                .hasAuthority("ADMIN")
+                .requestMatchers(
                         new AntPathRequestMatcher("/api/v1/signup/**"),
-                        new AntPathRequestMatcher("/api/v1/login/**"),
-                        new AntPathRequestMatcher("/myproject/swagger-ui/index.html")
+                        new AntPathRequestMatcher("/api/v1/login/**")
                 )
                 .permitAll()
                 .anyRequest()

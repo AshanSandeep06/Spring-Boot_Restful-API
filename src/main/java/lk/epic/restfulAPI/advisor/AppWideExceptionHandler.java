@@ -4,6 +4,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import lk.epic.restfulAPI.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,6 +26,11 @@ public class AppWideExceptionHandler {
         System.out.println(e.getClass().getName());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseUtil("06", "Bad Request", null));
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<ResponseUtil> handleAccessDeniedExceptions(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseUtil("06", e.getMessage(), null));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

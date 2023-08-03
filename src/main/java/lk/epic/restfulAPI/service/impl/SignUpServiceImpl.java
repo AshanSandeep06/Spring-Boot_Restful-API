@@ -4,7 +4,6 @@ import lk.epic.restfulAPI.config.service.JwtService;
 import lk.epic.restfulAPI.dto.SignUpDTO;
 import lk.epic.restfulAPI.entity.User;
 import lk.epic.restfulAPI.repo.UserRepo;
-import lk.epic.restfulAPI.roles.Role;
 import lk.epic.restfulAPI.service.SignUpService;
 import lk.epic.restfulAPI.util.PasswordHashing;
 import lk.epic.restfulAPI.util.ResponseUtil;
@@ -35,7 +34,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .lastName(signUpDTO.getLastName())
                 .email(signUpDTO.getEmail())
                 .password(passwordEncoder.encode(signUpDTO.getPassword()))
-                .role(Role.USER)
+                .role(signUpDTO.getRole())
                 .build();
 
         if (!userRepo.existsById(signUpDTO.getEmail())) {

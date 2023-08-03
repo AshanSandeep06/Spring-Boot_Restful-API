@@ -1,5 +1,6 @@
 package lk.epic.restfulAPI.dto;
 
+import lk.epic.restfulAPI.roles.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -29,4 +30,6 @@ public class SignUpDTO {
     @NotBlank(message = "Password Shouldn't be Blank")
     @Size(min = 5, max = 10, message = "Password must be between 5 and 10 characters")
     private String password;
+//    @Enumerated(EnumType.STRING)
+    private Role role;
 }
