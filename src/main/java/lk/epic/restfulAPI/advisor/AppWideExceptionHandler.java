@@ -25,7 +25,6 @@ public class AppWideExceptionHandler {
         System.out.println(e.getMessage());
         System.out.println(e.getLocalizedMessage());
         System.out.println(e.getClass().getName());
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseUtil("06", "Bad Request", null));
     }
 

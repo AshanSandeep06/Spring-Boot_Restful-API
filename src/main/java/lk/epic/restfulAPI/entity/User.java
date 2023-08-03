@@ -7,6 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +29,7 @@ public class User implements UserDetails {
     private String password;
 
     // TO create a new a Role
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
