@@ -48,11 +48,14 @@ public class SecurityConfiguration {
         // This will disable the csrf verification
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
+                // Defining rest end points which authority party can access these
                 .requestMatchers(
                         new AntPathRequestMatcher("/api/v1/movie/update"),
                         new AntPathRequestMatcher("/api/v1/movie/delete/{imdb}")
                 )
                 .hasAuthority("ADMIN")
+                // Defining rest end points any authority party can access these end points,
+                // Without getting Authenticated
                 .requestMatchers(
                         new AntPathRequestMatcher("/api/v1/signup/**"),
                         new AntPathRequestMatcher("/api/v1/login/**"),
@@ -73,12 +76,14 @@ public class SecurityConfiguration {
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler);
 
+        // This is for, catch 403 Forbidden error came from server automatically,
+        // When the Not Authorized in accessing movie controller rest end points without a bearer token
         httpSecurity
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, e) ->
                 {
                     // Create a JSON response with an error message
-                    String jsonErrorResponse = "{\"responseCode\": \"06\",\"responseMsg\": \"Access denied: You are required to Provide a Auth Token.\",\"content\": null}";
+                    String jsonErrorResponse = "{\"responseCode\": \"03\",\"responseMsg\": \"Not Authorized\",\"content\": null}";
                     response.setContentType("application/json;charset=UTF-8");
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.getWriter().write(jsonErrorResponse);
