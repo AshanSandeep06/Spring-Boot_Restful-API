@@ -1,6 +1,5 @@
 package lk.epic.restfulAPI.advisor;
 
-import io.jsonwebtoken.MalformedJwtException;
 import lk.epic.restfulAPI.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
@@ -59,19 +57,20 @@ public class AppWideExceptionHandler {
 
     @ExceptionHandler({BadCredentialsException.class})
     public ResponseEntity<ResponseUtil> handleBadCredentialsExceptions(BadCredentialsException e) {
+        System.out.println("403");
         return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body(new ResponseUtil("03", "Invalid Credentials", null));
     }
 
-    @ExceptionHandler({MalformedJwtException.class})
+    /*@ExceptionHandler({MalformedJwtException.class})
     public ResponseEntity<ResponseUtil> handleMalformedJwtExceptionExceptions(MalformedJwtException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseUtil("03", "Not Authorized", null));
-    }
+    }*/
 
-    @ExceptionHandler(HttpClientErrorException.Forbidden.class)
+ /*   @ExceptionHandler(HttpClientErrorException.Forbidden.class)
     public ResponseEntity<ResponseUtil> handleUnauthorizedAccessException(HttpClientErrorException.Forbidden e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ResponseUtil("03", "Not Authorized", null));
-    }
+    }*/
 
     private Throwable getRootCause(Throwable throwable) {
         Throwable rootCause = throwable;

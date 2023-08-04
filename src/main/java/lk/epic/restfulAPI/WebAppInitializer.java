@@ -2,10 +2,10 @@ package lk.epic.restfulAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.validation.annotation.Validated;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@Validated
+@EnableSwagger2
 public class WebAppInitializer {
     public static void main(String[] args) {
         SpringApplication.run(WebAppInitializer.class);

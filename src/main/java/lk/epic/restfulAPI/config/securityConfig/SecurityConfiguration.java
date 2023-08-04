@@ -13,6 +13,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity // Enables Web Spring security
 public class SecurityConfiguration {
@@ -53,7 +55,11 @@ public class SecurityConfiguration {
                 .hasAuthority("ADMIN")
                 .requestMatchers(
                         new AntPathRequestMatcher("/api/v1/signup/**"),
-                        new AntPathRequestMatcher("/api/v1/login/**")
+                        new AntPathRequestMatcher("/api/v1/login/**"),
+                        new AntPathRequestMatcher("/swagger-resources/**"),
+                        new AntPathRequestMatcher("/swagger-ui.html"),
+                        new AntPathRequestMatcher("/webjars/**"),
+                        new AntPathRequestMatcher("/v2/api-docs")
                 )
                 .permitAll()
                 .anyRequest()
@@ -66,6 +72,17 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler);
+
+        httpSecurity
+                .exceptionHandling()
+                .authenticationEntryPoint((request, response, e) ->
+                {
+                    // Create a JSON response with an error message
+                    String jsonErrorResponse = "{\"responseCode\": \"06\",\"responseMsg\": \"Access denied: You are required to Provide a Auth Token.\",\"content\": null}";
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write(jsonErrorResponse);
+                });
 
         return httpSecurity.build();
     }

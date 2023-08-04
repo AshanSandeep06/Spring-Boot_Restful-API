@@ -1,12 +1,8 @@
 package lk.epic.restfulAPI.config.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lk.epic.restfulAPI.config.service.JwtService;
-import lk.epic.restfulAPI.util.ResponseUtil;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
 @Component// Give this Constructor for, final fields (eg:- private final String myName)
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
@@ -39,18 +36,36 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String jwt_token;
         final String email;
 
+        // Define a CountDownLatch with an initial count of 1
+        CountDownLatch latch = new CountDownLatch(1);
+
         if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer ")) {
-            /*response.getWriter().println(new ResponseUtil("03", "Not Authorized", null));
+            // Continue the filter chain
             filterChain.doFilter(request, response);
+            return;
+
+            //--------------------------------------------------------------------------------
+
+
+            // Set the response status and content type
+            /*response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+            // Serialize the custom response to JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonResponse = objectMapper.writeValueAsString(new ResponseUtil("03", "Not Authorized", null));
+
+            // Write the JSON response to the response body
+            response.getWriter().write(jsonResponse);
             return;*/
 
-            // ---------------------------------------------------
+            // -----------------------------------------------------------------------------------------------
 
-            String requestURI = request.getRequestURI();
+            /*String requestURI = request.getRequestURI();
             System.out.println(requestURI);
 
             String urlPrefix = "/api/v1";
-            if (requestURI.equals(urlPrefix + "/signup") || requestURI.equals(urlPrefix + "/login")) {
+            if (requestURI.equals(urlPrefix + "/signup") || requestURI.equals(urlPrefix + "/login") || requestURI.equals("/swagger-resources/**") || requestURI.equals("/swagger-ui.html") || requestURI.equals("/webjars/**") || requestURI.equals("/v2/api-docs")) {
                 filterChain.doFilter(request, response);
             } else {
                 // Set the response status and content type
@@ -64,7 +79,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 // Write the JSON response to the response body
                 response.getWriter().write(jsonResponse);
             }
-            return;
+            return;*/
         }
 
         // Extract the JWT Token from Authentication Header
