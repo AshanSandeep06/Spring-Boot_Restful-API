@@ -60,7 +60,7 @@ public class SecurityConfiguration {
                         new AntPathRequestMatcher("/api/v1/signup/**"),
                         new AntPathRequestMatcher("/api/v1/login/**"),
                         new AntPathRequestMatcher("/swagger-resources/**"),
-                        new AntPathRequestMatcher("/swagger-ui/index.html"),
+                        new AntPathRequestMatcher("/swagger-ui.html"),
                         new AntPathRequestMatcher("/webjars/**"),
                         new AntPathRequestMatcher("/v2/api-docs")
                 )
